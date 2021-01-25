@@ -4,6 +4,9 @@ bin-release/
 [Oo]bj/
 [Bb]in/
 
+/bkup
+
+
 # Other files and folders
 .settings/
 

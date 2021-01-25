@@ -1,13 +1,6 @@
-/*************************************************************
- Note: This program will not run properly on z/OS.
-       Only Windows, Linux and UNIX are supported.
-       Values for PATH are CASE SENSITIVE.
-*************************************************************/
+
 %let path=/home/&sysuserid/EPG194;
 
-/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- WARNING: DO NOT ALTER CODE BELOW THIS LINE IN ANY WAY
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
 /* Make sure path consistently uses forward slashes */
 %let course=epg194;

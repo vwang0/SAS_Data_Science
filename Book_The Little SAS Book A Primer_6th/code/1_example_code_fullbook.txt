@@ -1,0 +1,2154 @@
+ /*-------------------------------------------------------------------*/
+ /*       The Little SAS(r) Book: A Primer, Fourth Edition            */
+ /*          by Lora D. Delwiche and Susan J. Slaughter               */
+ /*       Copyright(c) 2008 by SAS Institute Inc., Cary, NC, USA      */
+ /*                   SAS Publications order                          */
+ /*                   ISBN 978-1-59994-725-9                          */
+ /*-------------------------------------------------------------------*/
+ /*                                                                   */
+ /* This material is provided "as is" by SAS Institute Inc.  There    */
+ /* are no warranties, expressed or implied, as to merchantability or */
+ /* fitness for a particular purpose regarding the materials or code  */
+ /* contained herein. The Institute is not responsible for errors     */
+ /* in this material as it now exists or will exist, nor does the     */
+ /* Institute provide technical support for it.                       */
+ /*                                                                   */
+ /*-------------------------------------------------------------------*/
+ /* Date Last Updated: 14AUG2008                                      */
+ /*-------------------------------------------------------------------*/
+ /* Questions or problem reports concerning this material may be      */
+ /* addressed to the author:                                          */
+ /*                                                                   */
+ /* SAS Institute Inc.                                                */
+ /* SAS Press                                                         */
+ /* Attn: Lora Delwiche and Susan Slaughter                           */
+ /* SAS Campus Drive                                                  */
+ /* Cary, NC   27513                                                  */
+ /*                                                                   */
+ /*                                                                   */
+ /* If you prefer, you can send email to:  saspress@sas.com           */
+ /* Use this for subject field:                                       */
+ /*     Comments for Lora Delwiche and Susan Slaughter                */
+ /*                                                                   */
+ /*-------------------------------------------------------------------*/
+
+/* Chapter 1 (No examples) */
+
+/* Chapter 2 */
+
+/* Section 2.4 */
+/* First program */
+
+* Read internal data into SAS data set uspresidents; 
+DATA uspresidents;    
+INPUT President $ Party $ Number;
+   DATALINES;
+Adams     F  2
+Lincoln   R 16
+Grant     R 18
+Kennedy   D 35
+   ;
+RUN;
+
+
+/* Section 2.4 */
+/* Second program */
+
+* Read data from external file into SAS data set; 
+DATA uspresidents;
+   INFILE 'c:\MyRawData\President.dat';
+   INPUT President $ Party $ Number;
+RUN;
+
+
+/* Section 2.5 */
+/* Program */
+
+* Create a SAS data set named toads;
+* Read the data file ToadJump.dat using list input;
+DATA toads;
+   INFILE 'c:\MyRawData\ToadJump.dat';
+   INPUT ToadName $ Weight Jump1 Jump2 Jump3;
+RUN;
+* Print the data to make sure the file was read correctly;
+PROC PRINT DATA = toads;
+   TITLE 'SAS Data Set Toads';
+RUN;
+
+/* Section 2.6 */
+
+/* Program */
+
+* Create a SAS data set named sales;
+* Read the data file OnionRing.dat using column input;
+DATA sales;
+   INFILE 'c:\MyRawData\OnionRing.dat';
+   INPUT VisitingTeam $ 1-20 ConcessionSales 21-24 BleacherSales 25-28
+         OurHits 29-31 TheirHits 32-34 OurRuns 35-37 TheirRuns 38-40;
+RUN;
+* Print the data to make sure the file was read correctly;
+PROC PRINT DATA = sales;
+   TITLE 'SAS Data Set Sales';
+RUN;
+
+/* Section 2.7 */
+
+/* Program */
+
+* Create a SAS data set named contest;
+* Read the file Pumpkin.dat using formatted input;
+DATA contest;
+   INFILE 'c:\MyRawData\Pumpkin.dat';
+   INPUT Name $16. Age 3. +1 Type $1. +1 Date MMDDYY10.
+         (Score1 Score2 Score3 Score4 Score5) (4.1);
+RUN;
+* Print the data set to make sure the file was read correctly;
+PROC PRINT DATA = contest;
+   TITLE 'Pumpkin Carving Contest';
+RUN;
+
+
+/* Section 2.9 */
+
+/* Program */
+
+* Create a SAS data set named nationalparks;
+* Read a data file NatPark.dat mixing input styles;
+DATA nationalparks;
+   INFILE 'c:\MyRawData\NatPark.dat';
+   INPUT ParkName $ 1-22 State $ Year @40 Acreage COMMA9.;
+RUN;
+PROC PRINT DATA = nationalparks;
+   TITLE 'Selected National Parks';
+RUN;
+
+/* Section 2.10 */
+
+/* Program */
+
+DATA weblogs;
+  INFILE 'c:\MyWebLogs\dogweblogs.txt';
+  INPUT @'[' AccessDate DATE11. @'GET' File :$20.;
+RUN;
+PROC PRINT DATA = weblogs;
+  TITLE 'Dog Care Web Logs';
+RUN;
+
+
+/* Section 2.11 */
+
+/* Program */
+
+* Create a SAS data set named highlow;
+* Read the data file using line pointers;
+DATA highlow;
+   INFILE 'c:\MyRawData\Temperature.dat';
+   INPUT City $ State $ 
+         / NormalHigh NormalLow
+         #3 RecordHigh RecordLow;
+RUN;
+PROC PRINT DATA = highlow;
+   TITLE 'High and Low Temperatures for July';
+RUN;
+
+/* Section 2.12 */
+
+/* Program */
+
+* Input more than one observation from each record;
+DATA rainfall;
+   INFILE 'c:\MyRawData\Precipitation.dat';
+   INPUT City $ State $ NormalRain MeanDaysRain @@;
+RUN;
+PROC PRINT DATA = rainfall;
+   TITLE 'Normal Total Precipitation and';
+   TITLE2 'Mean Days with Precipitation for July';
+RUN;
+
+/* Section 2.13 */
+
+/* Program */
+
+* Use a trailing @, then delete surface streets;
+DATA freeways;
+   INFILE 'c:\MyRawData\Traffic.dat';
+   INPUT Type $ @;
+   IF Type = 'surface' THEN DELETE;
+   INPUT Name $ 9-38 AMTraffic PMTraffic;
+RUN;
+PROC PRINT DATA = freeways;
+   TITLE 'Traffic for Freeways';
+RUN;
+
+/* Section 2.14 */
+
+/* First Program */
+
+DATA icecream;
+   INFILE 'c:\MyRawData\IceCreamSales.dat' FIRSTOBS = 3;
+   INPUT Flavor $ 1-9 Location BoxesSold;
+RUN;
+
+
+/* Second Program */
+
+DATA icecream;
+   INFILE 'c:\MyRawData\IceCreamSales2.dat' FIRSTOBS = 3 OBS=5;
+   INPUT Flavor $ 1-9 Location BoxesSold;
+RUN;
+
+
+/* Third Program */
+
+DATA class102;
+   INFILE 'c:\MyRawData\AllScores.dat' MISSOVER;
+   INPUT Name $ Test1 Test2 Test3 Test4 Test5;
+RUN; 
+
+
+/* Fourth Program */
+
+DATA homeaddress;
+   INFILE 'c:\MyRawData\Address.dat' TRUNCOVER;
+   INPUT Name $ 1-15 Number 16-19 Street $ 22-37;
+RUN;
+
+/* Section 2.15 */
+
+/* First Program */
+
+DATA reading;
+   INFILE 'c:\MyRawData\Books.dat' DLM = ',';
+   INPUT Name $ Week1 Week2 Week3 Week4 Week5;
+RUN;
+
+
+/* Third Program (second program intentionally omitted) */
+
+DATA music;
+   INFILE 'c:\MyRawData\Bands.csv' DLM = ',' DSD MISSOVER;
+   INPUT BandName :$30. GigDate :MMDDYY10. EightPM NinePM TenPM ElevenPM;
+RUN;
+PROC PRINT DATA = music;
+   TITLE 'Customers at Each Gig';
+RUN;
+
+/* Section 2.16 */
+
+/* Program */
+
+PROC IMPORT DATAFILE ='c:\MyRawData\Bands2.csv' OUT = music REPLACE;
+RUN;
+PROC PRINT DATA = music;    
+   TITLE 'Customers at Each Gig'; RUN;
+
+/* Section 2.17 */
+/* Program (data must be read from a spreadsheet) */
+
+PROC IMPORT DATAFILE = 'c:\MyExcelFiles\OnionRing.xls' DBMS=XLS OUT = sales;
+RUN;
+PROC PRINT DATA = sales;
+   TITLE 'SAS Data Set Read From Excel File'; RUN;
+
+
+/* Section 2.18 */
+
+/* First Program (data must be read from a spreadsheet) */
+* Read an Excel spreadsheet using DDE;
+FILENAME baseball DDE 'CLIPBOARD';
+DATA sales;
+  INFILE baseball NOTAB DLM='09'x DSD MISSOVER;
+  LENGTH VisitingTeam $ 20;
+  INPUT VisitingTeam CSales BSales OurHits TheirHits OurRuns TheirRuns;
+RUN;
+
+/* Second Program (data must be read from a spreadsheet, */
+/* must replace DDE triplet with DDE triplet for your own files*/
+
+* Read an Excel spreadsheet using DDE;
+
+OPTIONS NOXSYNC NOXWAIT;
+X '"C:\MyFiles\BaseBall.xls"';
+FILENAME baseball DDE 'Excel|C:\MyFiles\[BaseBall.xls]sheet1!R2C1:R5C7';
+DATA sales;
+  INFILE baseball NOTAB DLM='09'x DSD MISSOVER;
+  LENGTH VisitingTeam $ 20;
+  INPUT VisitingTeam CSales BSales OurHits TheirHits OurRuns TheirRuns;
+RUN;
+
+/* Section 2.19 */
+/* First Program */
+
+DATA distance; 
+   Miles = 26.22;
+   Kilometers = 1.61 * Miles;
+RUN;
+PROC PRINT DATA = distance;
+RUN;
+
+/* Second Program */
+DATA Bikes.distance; 
+   Miles = 26.22;
+   Kilometers = 1.61 * Miles;
+RUN;
+PROC PRINT DATA = Bikes.distance;
+RUN;
+
+/* Section 2.20 */
+
+/* First Program */
+
+LIBNAME plants 'c:\MySASLib';
+DATA plants.magnolia;
+   INFILE 'c:\MyRawData\Mag.dat';
+   INPUT ScientificName $ 1-14 CommonName $ 16-32 MaximumHeight
+      AgeBloom Type $ Color $;
+RUN;
+
+/* Second Program */
+
+LIBNAME example 'c:\MySASLib';
+PROC PRINT DATA = example.magnolia;
+   TITLE 'Magnolias';
+RUN;
+
+/* Section 2.21 */
+
+/* First Program */
+
+DATA 'c:\MySASLib\magnolia';
+   INFILE 'c:\MyRawData\Mag.dat';
+   INPUT ScientificName $ 1-14 CommonName $ 16-32 MaximumHeight
+      AgeBloom Type $ Color $;
+RUN;
+
+/* Second Program */
+PROC PRINT DATA = 'c:\MySASLib\magnolia';
+   TITLE 'Magnolias';
+RUN;
+
+/* Section 2.22 */
+/* Program */
+
+DATA funnies (LABEL = 'Comics Character Data');
+   INPUT Id Name $ Height Weight DoB MMDDYY8. @@;
+   LABEL Id  = 'Identification no.'
+      Height = 'Height in inches'
+      Weight = 'Weight in pounds'
+      DoB    = 'Date of birth';
+   INFORMAT DoB MMDDYY8.;
+   FORMAT DoB WORDDATE18.;
+   DATALINES;
+53      Susie 42 41 07-11-81 
+54      Charlie 46 55 10-26-54
+55      Calvin 40 35 01-10-81 
+56      Lucy 46 52 01-13-55
+   ;
+* Use PROC CONTENTS to describe data set funnies;
+PROC CONTENTS DATA = funnies;
+RUN;
+
+/* Chapter 3 */
+
+/* Section 3.1 */
+
+/* Program */
+
+* Modify homegarden data set with assignment statements;
+DATA homegarden;
+   INFILE 'c:\MyRawData\Garden.dat';
+   INPUT Name $ 1-7 Tomato Zucchini Peas Grapes;
+   Zone = 14;
+   Type = 'home';
+   Zucchini = Zucchini * 10;
+   Total = Tomato + Zucchini + Peas + Grapes;
+   PerTom = (Tomato / Total) * 100;
+RUN;
+PROC PRINT DATA = homegarden;
+   TITLE 'Home Gardening Survey';
+RUN;
+
+/* Section 3.2 */
+
+/* Section 3.2 */
+/* Program */
+
+DATA contest;
+   INFILE 'c:\MyRawData\Pumpkin.dat';
+   INPUT Name $16. Age 3. +1 Type $1. +1 Date MMDDYY10.
+         (Scr1 Scr2 Scr3 Scr4 Scr5) (4.1);
+   AvgScore = MEAN(Scr1, Scr2, Scr3, Scr4, Scr5);
+   DayEntered = DAY(Date);
+   Type = UPCASE(Type);
+RUN;
+PROC PRINT DATA = contest;
+   TITLE 'Pumpkin Carving Contest';
+RUN;
+
+
+/* Section 3.5 */
+
+/* Program */
+
+DATA sportscars;
+   INFILE 'c:\MyRawData\UsedCars.dat';
+   INPUT Model $ Year Make $ Seats Color $;
+   IF Year < 1975 THEN Status = 'classic';
+   IF Model = 'Corvette' OR Model = 'Camaro' THEN Make = 'Chevy';
+   IF Model = 'Miata' THEN DO;
+      Make = 'Mazda';
+      Seats = 2;
+   END;
+RUN;
+PROC PRINT DATA = sportscars;
+   TITLE "Eddy’s Excellent Emporium of Used Sports Cars";
+RUN;
+
+/* Section 3.6 */
+
+/* Program */
+
+* Group observations by cost;
+DATA homeimprovements;
+   INFILE 'c:\MyRawData\Home.dat';
+   INPUT Owner $ 1-7 Description $ 9-33 Cost;
+   IF Cost = . THEN CostGroup = 'missing';
+      ELSE IF Cost < 2000 THEN CostGroup = 'low';
+      ELSE IF Cost < 10000 THEN CostGroup = 'medium';
+      ELSE CostGroup = 'high';
+RUN;
+PROC PRINT DATA = homeimprovements;
+   TITLE 'Home Improvement Cost Groups';
+RUN;
+
+
+/* Section 3.7 */
+
+/* Program */
+
+* Choose only comedies;
+DATA comedy;
+   INFILE 'c:\MyRawData\Shakespeare.dat';
+   INPUT Title $ 1-26 Year Type $;
+   IF Type = 'comedy';
+RUN;
+PROC PRINT DATA = comedy;
+   TITLE 'Shakespearean Comedies';
+RUN;
+
+/* Section 3.8 */
+
+/* Program */
+
+DATA librarycards;
+   INFILE 'c:\MyRawData\Library.dat' TRUNCOVER;
+   INPUT Name $11. + 1 BirthDate MMDDYY10. +1 IssueDate ANYDTDTE10.
+      DueDate DATE11.;
+   DaysOverDue = TODAY() - DueDate;
+   Age = INT(YRDIF(BirthDate, TODAY(), 'ACTUAL'));
+   IF IssueDate > '01JAN2008'D THEN NewCard = 'yes';
+RUN;
+PROC PRINT DATA = librarycards;
+   FORMAT Issuedate MMDDYY8. DueDate WEEKDATE17.;
+   TITLE 'SAS Dates without and with Formats';
+RUN;
+
+
+/* Section 3.10 */
+
+/* Program */
+
+* Using RETAIN and sum statements to find most runs and total runs;
+DATA gamestats;
+   INFILE 'c:\MyRawData\Games.dat';
+   INPUT Month 1 Day 3-4 Team $ 6-25 Hits 27-28 Runs 30-31;
+   RETAIN MaxRuns;
+   MaxRuns = MAX(MaxRuns, Runs);
+   RunsToDate + Runs;
+RUN;
+PROC PRINT DATA = gamestats;
+   TITLE "Season's Record to Date";
+RUN;
+
+/* Section 3.11*/
+
+/* Program */
+
+* Change all 9s to missing values;
+DATA songs;
+   INFILE 'c:\MyRawData\WBRK.dat';
+   INPUT City $ 1-15 Age domk wj hwow simbh kt aomm libm tr filp ttr;
+   ARRAY song (10) domk wj hwow simbh kt aomm libm tr filp ttr;
+   DO i = 1 TO 10;
+      IF song(i) = 9 THEN song(i) = .;
+   END;
+RUN;
+PROC PRINT DATA = songs;
+   TITLE 'WBRK Song Survey';
+RUN;
+
+
+
+/* Section 3.12 */
+/* Program */
+
+DATA songs;    
+   INFILE 'c:\MyRawData\WBRK.dat';    
+   INPUT City $ 1-15 Age domk wj hwow simbh kt aomm libm tr filp ttr;
+   ARRAY new (10) Song1 - Song10;
+   ARRAY old (10) domk -- ttr;
+   DO i = 1 TO 10;
+      IF old(i) = 9 THEN new(i) = .;
+         ELSE new(i) = old(i);
+   END;
+   AvgScore = MEAN(OF Song1 - Song10);
+PROC PRINT DATA = songs;
+   TITLE 'WBRK Song Survey';
+RUN;
+
+/* Chapter 4 */
+
+/* Section 4.2 */
+
+/* First Program */
+
+DATA 'c:\MySASLib\style';
+   INFILE 'c:\MyRawData\Artists.dat';
+   INPUT Name $ 1-21 Genre $ 23-40 Origin $ 42;
+RUN;
+/* Second Program */
+
+PROC PRINT DATA = 'c:\MySASLib\style';
+   WHERE Genre = 'Impressionism';
+   TITLE 'Major Impressionist Painters';
+   FOOTNOTE 'F = France N = Netherlands U = US';
+RUN;
+
+/* Section 4.3 */
+
+/* Program */
+
+DATA marine;
+   INFILE 'c:\MyRawData\Lengths.dat';
+   INPUT Name $ Family $ Length @@;
+RUN;
+* Sort the data;
+PROC SORT DATA = marine OUT = seasort NODUPKEY;
+   BY Family DESCENDING Length;
+PROC PRINT DATA = seasort;
+   TITLE 'Whales and Sharks';
+RUN;
+
+
+/* Section 4.4 */
+
+/* Program */
+
+DATA sales;    
+   INFILE 'c:\MyRawData\Candy.dat';    
+   INPUT Name $ 1-11 Class @15 DateReturned MMDDYY10. CandyType $
+      Quantity;
+   Profit = Quantity * 1.25;
+PROC SORT DATA = sales;
+   BY Class;
+PROC PRINT DATA = sales;
+   BY Class;
+   SUM Profit;
+   VAR Name DateReturned CandyType Profit;
+   TITLE 'Candy Sales for Field Trip by Class';
+RUN;
+
+/* Section 4.5 */
+
+/* Program */
+
+DATA sales;    
+   INFILE 'c:\MyRawData\Candy.dat';    
+   INPUT Name $ 1-11 Class @15 DateReturned MMDDYY10. CandyType $
+         Quantity;    
+   Profit = Quantity * 1.25; 
+PROC PRINT DATA = sales;    
+VAR Name DateReturned CandyType Profit;
+   FORMAT DateReturned DATE9. Profit DOLLAR6.2;
+   TITLE 'Candy Sale Data Using Formats';
+RUN;
+
+
+/* Section 4.7 */
+
+/* Program */
+
+DATA carsurvey;    
+   INFILE 'c:\MyRawData\Cars.dat';
+   INPUT Age Sex Income Color $;
+PROC FORMAT;
+   VALUE gender 1 = 'Male'
+                2 = 'Female';
+   VALUE agegroup 13 -< 20 = 'Teen'
+                  20 -< 65 = 'Adult'
+                  65 - HIGH = 'Senior';
+   VALUE $col  'W' = 'Moon White'
+               'B' = 'Sky Blue'
+               'Y' = 'Sunburst Yellow'
+               'G' = 'Rain Cloud Gray';
+* Print data using user-defined and standard (DOLLAR8.) formats;
+PROC PRINT DATA = carsurvey;
+   FORMAT Sex gender. Age agegroup. Color $col. Income DOLLAR8.;
+   TITLE 'Survey Results Printed with User-Defined Formats';
+RUN;
+
+
+/* Section 4.8 */
+
+/* Program */
+
+* Write a report with FILE and PUT statements;
+DATA _NULL_;
+   INFILE 'c:\MyRawData\Candy.dat';
+   INPUT Name $ 1-11 Class @15 DateReturned MMDDYY10. 
+         CandyType $ Quantity;
+   Profit = Quantity * 1.25;
+   FILE 'c:\MyRawData\Student.txt' PRINT;
+   TITLE;
+   PUT @5 'Candy sales report for ' Name 'from classroom ' Class
+     // @5 'Congratulations!  You sold ' Quantity 'boxes of candy'
+     / @5 'and earned ' Profit DOLLAR6.2 ' for our field trip.';
+   PUT _PAGE_;
+RUN;
+
+/* Section 4.9 */
+
+/* Program */
+
+DATA sales;    
+   INFILE 'c:\MyRawData\Flowers.dat';    
+   INPUT CustomerID $ @9 SaleDate MMDDYY10. Petunia SnapDragon
+         Marigold;    
+   Month = MONTH(SaleDate); 
+PROC SORT DATA = sales;    
+   BY Month; 
+
+* Calculate means by Month for flower sales;
+PROC MEANS DATA = sales;    
+   BY Month;    
+   VAR Petunia SnapDragon Marigold;
+   TITLE 'Summary of Flower Sales by Month';
+RUN;
+
+
+
+/* Section 4.10 */
+/* Program */
+
+DATA sales;    
+   INFILE 'c:\MyRawData\Flowers.dat';
+   INPUT CustomerID $ @9 SaleDate MMDDYY10. Petunia SnapDragon Marigold;
+PROC SORT DATA = sales;
+   BY CustomerID;
+
+* Calculate means by CustomerID, output sum and mean to new data set;
+PROC MEANS NOPRINT DATA = sales;
+   BY CustomerID;
+   VAR Petunia SnapDragon Marigold;
+   OUTPUT OUT = totals  MEAN(Petunia SnapDragon Marigold) =
+          MeanPetunia MeanSnapDragon MeanMarigold
+      SUM(Petunia SnapDragon Marigold) = Petunia SnapDragon Marigold;
+PROC PRINT DATA = totals;
+   TITLE 'Sum of Flower Data over Customer ID';
+   FORMAT MeanPetunia MeanSnapDragon MeanMarigold 3.;
+RUN;
+
+/* Section 4.11 */
+
+/* Program */
+
+DATA orders;
+   INFILE 'c:\MyRawData\Coffee.dat';
+   INPUT Coffee $ Window $ @@;
+
+* Print tables for Window and Window by Coffee;
+PROC FREQ DATA = orders;
+   TABLES Window  Window * Coffee;
+   RUN;
+
+/* Section 4.12 */
+
+/* Program */
+
+DATA boats;
+   INFILE 'c:\MyRawData\Boats.dat';
+   INPUT Name $ 1-12 Port $ 14-20 Locomotion $ 22-26 Type $ 28-30 
+      Price 32-36;
+RUN;
+
+* Tabulations with three dimensions;
+PROC TABULATE DATA = boats;
+   CLASS Port Locomotion Type;
+   TABLE Port, Locomotion, Type;
+   TITLE 'Number of Boats by Port, Locomotion, and Type';
+RUN;
+
+/* Section 4.13 */
+/* Program */
+
+DATA boats;
+   INFILE 'c:\MyRawData\Boats.dat';
+   INPUT Name $ 1-12 Port $ 14-20 Locomotion $ 22-26 Type $ 28-30 
+      Price 32-36;
+RUN;
+
+* Tabulations with two dimensions and statistics;
+PROC TABULATE DATA = boats;
+   CLASS Locomotion Type;
+   VAR Price;
+   TABLE Locomotion ALL, MEAN*Price*(Type ALL);
+   TITLE 'Mean Price by Locomotion and Type';
+RUN;
+
+/* Section 4.14 */
+/* Program */
+
+DATA boats;
+   INFILE 'c:\MyRawData\Boats.dat';
+   INPUT Name $ 1-12 Port $ 14-20 Locomotion $ 22-26 Type $ 28-30 
+      Price 32-36;
+RUN;
+
+* PROC TABULATE report with options;
+PROC TABULATE DATA = boats FORMAT=DOLLAR9.2;
+   CLASS Locomotion Type;
+   VAR Price;
+   TABLE Locomotion ALL, MEAN*Price*(Type ALL)
+      /BOX='Full Day Excursions' MISSTEXT='none';
+   TITLE;
+RUN;
+
+
+/* Section 4.15 */
+/* Program */
+
+DATA boats;
+   INFILE 'c:\MyRawData\Boats.dat';
+   INPUT Name $ 1-12 Port $ 14-20 Locomotion $ 22-26 Type $ 28-30 
+      Price 32-36;
+RUN;
+
+* Changing headers;
+PROC FORMAT;
+   VALUE $typ  'cat' = 'catamaran'
+               'sch' = 'schooner'
+               'yac' = 'yacht';
+RUN;
+PROC TABULATE DATA = boats FORMAT=DOLLAR9.2;
+   CLASS Locomotion Type;
+   VAR Price;
+   FORMAT Type $typ.;
+   TABLE Locomotion='' ALL, 
+      MEAN=''*Price='Mean Price by Type of Boat'*(Type='' ALL)
+      /BOX='Full Day Excursions' MISSTEXT='none';
+   TITLE;
+RUN;
+
+/* Section 4.16 */
+
+/* Program */
+DATA boats;
+   INFILE 'c:\MyRawData\Boats2.dat';
+   INPUT Name $ 1-12 Port $ 14-20 Locomotion $ 22-26 Type $ 28-30 
+      Price 32-36 Length 38-40;
+RUN;
+
+* Using the FORMAT= option in the TABLE statement;
+PROC TABULATE DATA = boats;
+   CLASS Locomotion Type;
+   VAR Price Length;
+   TABLE Locomotion ALL, 
+      MEAN * (Price*FORMAT=DOLLAR6.2 Length*FORMAT=6.0) * (Type ALL);
+   TITLE 'Price and Length by Type of Boat';
+RUN;
+ 
+
+/* Section 4.17 */
+
+/* Program.dat */
+
+DATA natparks;
+   INFILE 'c:\MyRawData\Parks.dat';
+   INPUT Name $ 1-21 Type $ Region $ Museums Camping;
+RUN;
+PROC REPORT DATA = natparks NOWINDOWS HEADLINE;
+   TITLE 'Report with Character and Numeric Variables';
+RUN;
+PROC REPORT DATA = natparks NOWINDOWS HEADLINE;
+   COLUMN Museums Camping;
+   TITLE 'Report with Only Numeric Variables';
+RUN;
+
+/* Section 4.18 */
+/* Program */
+
+DATA natparks;
+   INFILE 'c:\MyRawData\Parks.dat';
+   INPUT Name $ 1-21 Type $ Region $ Museums Camping;
+RUN;
+
+* PROC REPORT with ORDER variable, MISSING option, and column header;
+PROC REPORT DATA = natparks NOWINDOWS HEADLINE MISSING;
+   COLUMN Region Name Museums Camping;
+   DEFINE Region / ORDER;
+   DEFINE Camping / ANALYSIS 'Camp/Grounds';
+   TITLE 'National Parks and Monuments Arranged by Region';
+RUN;
+
+
+
+/* Section 4.19 */
+/* Program */
+DATA natparks;
+   INFILE 'c:\MyRawData\Parks.dat';
+   INPUT Name $ 1-21 Type $ Region $ Museums Camping;
+RUN;
+
+* Region and Type as GROUP variables;
+PROC REPORT DATA = natparks NOWINDOWS HEADLINE;
+   COLUMN Region Type Museums Camping;
+   DEFINE Region / GROUP;
+   DEFINE Type / GROUP;
+   TITLE 'Summary Report with Two Group Variables';
+RUN;
+
+* Region as GROUP and Type as ACROSS with sums;
+PROC REPORT DATA = natparks NOWINDOWS HEADLINE;
+   COLUMN Region Type,(Museums Camping);
+   DEFINE Region / GROUP;
+   DEFINE Type / ACROSS;
+   TITLE 'Summary Report with a Group and an Across Variable';
+RUN;
+
+/* Section 4.20 */
+/* Program */
+
+DATA natparks;
+   INFILE 'c:\MyRawData\Parks.dat';
+   INPUT Name $ 1-21 Type $ Region $ Museums Camping;
+RUN;
+
+* PROC REPORT with breaks;
+PROC REPORT DATA = natparks NOWINDOWS HEADLINE;
+   COLUMN Name Region Museums Camping;
+   DEFINE Region / ORDER;
+   BREAK AFTER Region / SUMMARIZE OL SKIP;
+   RBREAK AFTER / SUMMARIZE OL SKIP;
+   TITLE 'Detail Report with Summary Breaks';
+RUN;
+
+
+
+
+/* Section 4.21 */
+/* Program */
+
+DATA natparks;
+   INFILE 'c:\MyRawData\Parks.dat';
+   INPUT Name $ 1-21 Type $ Region $ Museums Camping;
+RUN;
+
+*Statistics in COLUMN statement with two group variables;
+PROC REPORT DATA = natparks NOWINDOWS HEADLINE;
+   COLUMN Region Type N (Museums Camping),MEAN;
+   DEFINE Region / GROUP;
+   DEFINE Type / GROUP;
+   TITLE 'Statistics with Two Group Variables';
+RUN;
+
+*Statistics in COLUMN statement with group and across variables;
+PROC REPORT DATA = natparks NOWINDOWS HEADLINE;
+   COLUMN Region N Type,(Museums Camping),MEAN;
+   DEFINE Region / GROUP;
+   DEFINE Type / ACROSS;
+   TITLE 'Statistics with a Group and Across Variable';
+RUN;
+
+/* Section 4.22 */
+/* Program */
+DATA natparks;
+   INFILE 'c:\MyRawData\Parks.dat';
+   INPUT Name $ 1-21 Type $ Region $ Museums Camping;
+RUN;
+
+* COMPUTE new variables that are numeric and character;
+PROC REPORT DATA = natparks NOWINDOWS HEADLINE;
+   COLUMN Name Region Museums Camping Facilities Note;
+   DEFINE Museums / ANALYSIS SUM NOPRINT;
+   DEFINE Camping / ANALYSIS SUM NOPRINT;
+   DEFINE Facilities / COMPUTED 'Camping/and/Museums';
+   DEFINE Note / COMPUTED;
+   COMPUTE Facilities;
+      Facilities = Museums.SUM + Camping.SUM;
+   ENDCOMP;
+   COMPUTE Note / CHAR LENGTH = 10;
+      IF Camping.SUM = 0 THEN Note = 'No Camping';
+   ENDCOMP;
+   TITLE 'Report with Two Computed Variables'; 
+RUN;
+
+/* Section 4.23 */
+
+/* Section 4.23 */
+/* Program */
+
+DATA books;
+   INFILE 'c:\MyRawData\LibraryBooks.dat';
+   INPUT Age BookType $ @@;
+RUN;
+
+*Define formats to group the data;
+PROC FORMAT;
+   VALUE agegpa
+         0-18    = '0 to 18'
+         19-25   = '19 to 25'
+         26-49   = '26 to 49'
+         50-HIGH = '  50+ ';
+   VALUE agegpb
+         0-25    = '0 to 25'
+         26-HIGH = '  26+ ';
+   VALUE $typ
+        'bio','non','ref' = 'Non-Fiction'
+        'fic','mys','sci' = 'Fiction';
+RUN;
+
+*Create two way table with Age grouped into four categories;
+PROC FREQ DATA = books;
+   TITLE 'Patron Age by Book Type: Four Age Groups';
+   TABLES BookType * Age / NOPERCENT NOROW NOCOL;
+   FORMAT Age agegpa. BookType $typ.;
+RUN;
+
+*Create two way table with Age grouped into two categories;
+PROC FREQ DATA = books;
+   TITLE 'Patron Age by Book Type: Two Age Groups';
+   TABLES BookType * Age / NOPERCENT NOROW NOCOL;
+   FORMAT Age agegpb. BookType $typ.;
+RUN;
+
+/* Chapter 5 */
+
+/* Section 5.2 */
+
+/* First Program */	
+DATA giant;
+   INFILE 'c:\MyRawData\Tomatoes.dat' DSD;
+   INPUT Name :$15. Color $ Days Weight;
+
+* Trace PROC MEANS;
+ODS TRACE ON;
+PROC MEANS DATA = giant;
+   BY Color;
+RUN;
+ODS TRACE OFF;
+
+/* Second Program */	
+
+PROC MEANS DATA = giant;
+   BY Color;
+   TITLE 'Red Tomatoes';
+ODS SELECT Means.ByGroup1.Summary;
+RUN;
+
+/* Section 5.3 */
+/* Program */
+
+DATA giant;
+   INFILE 'c:\MyRawData\Tomatoes.dat' DSD;
+   INPUT Name :$15. Color $ Days Weight;
+PROC TABULATE DATA = giant;
+   CLASS Color;
+   VAR Days Weight;
+   TABLE Color ALL, (Days Weight) * MEAN;
+   TITLE 'Standard TABULATE Output';
+ODS OUTPUT Table = tabout;
+RUN;
+PROC PRINT DATA = tabout;
+   TITLE 'OUTPUT SAS Data Set from TABULATE';
+RUN;
+
+/* Section 5.4 */
+
+/* Program */
+* Create the HTML files and remove procedure name;
+ODS HTML FILE = 'c:\MyHTMLFiles\Marine.html'; 
+ODS NOPROCTITLE;
+DATA marine;
+   INFILE 'c:\MyRawData\Sealife.dat';
+   INPUT Name $ Family $ Length @@;
+RUN;
+PROC MEANS DATA = marine MEAN MIN MAX;
+   CLASS Family;
+   TITLE 'Whales and Sharks';
+RUN;
+PROC PRINT DATA = marine;
+RUN;
+* Close the HTML files;
+ODS HTML CLOSE;
+
+
+/* Section 5.5 */
+/* Program */
+
+* Create an RTF file;
+ODS RTF FILE = 'c:\MyRTFFiles\Marine.rtf' BODYTITLE COLUMNS=2;
+ODS NOPROCTITLE;
+DATA marine;
+   INFILE 'c:\MyRawData\Sealife.dat';
+   INPUT Name $ Family $ Length @@;
+RUN;
+PROC MEANS DATA = marine MEAN MIN MAX;
+   CLASS Family;
+   TITLE 'Whales and Sharks';
+RUN;
+PROC PRINT DATA = marine;
+RUN;
+* Close the RTF file;
+ODS RTF CLOSE;
+
+/* Section 5.6 */
+/* Program */
+
+* Create the PDF file;
+ODS PDF FILE = 'c:\MyPDFFiles\Marine.pdf' STARTPAGE = NO;
+ODS NOPROCTITLE;
+DATA marine;
+   INFILE 'c:\MyRawData\Sealife.dat';
+   INPUT Name $ Family $ Length @@;
+RUN;
+PROC MEANS DATA = marine MEAN MIN MAX;
+   CLASS Family;
+   TITLE 'Whales and Sharks';
+RUN;
+PROC PRINT DATA = marine;
+RUN;
+* Close the PDF file;
+ODS PDF CLOSE;
+
+
+
+
+/* Section 5.8 */
+
+/* First Program */
+
+ODS HTML FILE='c:\MyHTML\results.htm';
+DATA skating;
+  INFILE 'c:\MyData\Women.csv' DSD MISSOVER;
+  INPUT Year Name :$20. Country $ 
+        Time $ Record $;
+RUN;
+PROC PRINT DATA=skating;
+  TITLE 'Women''s 5000 Meter Speed Skating';
+  ID Year;
+RUN;
+ODS HTML CLOSE;
+
+
+/* Second Program */
+
+ODS HTML FILE='c:\MyHTML\results2.htm';
+PROC PRINT DATA=skating 
+     STYLE(DATA)={BACKGROUND=white};
+  TITLE 'Women''s 5000 Meter Speed Skating';
+  ID Year;
+RUN;
+ODS HTML CLOSE;
+
+/* Third Program */
+
+ODS HTML FILE='c:\MyHTML\results3.htm';
+PROC PRINT DATA=skating 
+     STYLE(DATA)={BACKGROUND=white};
+  TITLE 'Women''s 5000 Meter Speed Skating';
+  VAR Name Country Time;
+  VAR Record/STYLE(DATA)=
+       {FONT_STYLE=italic FONT_WEIGHT=bold};
+  ID Year;
+RUN;
+ODS HTML CLOSE;
+
+/* Section 5.9 */
+
+/* First Program */
+DATA skating;
+   INFILE 'c:\MyRawData\Speed.dat' DSD;
+   INPUT Name :$20. Country $ 
+      NumYears NumGold @@;
+RUN;
+ODS HTML FILE='c:\MyHTML\speed.htm';
+PROC REPORT DATA = skating NOWINDOWS;
+   COLUMN Country Name NumGold;
+   DEFINE Country / GROUP;
+   TITLE 'Olympic Women''s '
+      'Speed Skating';
+RUN;
+ODS HTML CLOSE;
+
+
+/* Second Program */
+
+* STYLE= option in PROC statement;
+ODS HTML FILE='c:\MyHTML\speed2.htm';
+PROC REPORT DATA = skating NOWINDOWS 
+   SPANROWS  STYLE(COLUMN) = 
+   {FONT_WEIGHT = bold JUST = center};
+   COLUMN Country Name NumGold;
+   DEFINE Country / GROUP;
+   TITLE 'Olympic Women''s '
+      'Speed Skating';
+RUN;
+ODS HTML CLOSE;
+
+/* Third Program */
+
+* STYLE= option in DEFINE statement;
+ODS HTML FILE='c:\MyHTML\speed3.htm';
+PROC REPORT DATA = skating NOWINDOWS
+   SPANROWS;
+   COLUMN Country Name NumGold;
+   DEFINE Country / GROUP STYLE(COLUMN) = 
+      {FONT_WEIGHT = bold JUST = center};
+   TITLE 'Olympic Women''s '
+      'Speed Skating';
+RUN;
+ODS HTML CLOSE;
+
+
+/* Section 5.10 */
+
+/* First Program */
+
+ODS HTML FILE='c:\MyHTML\table.htm';
+DATA skating;
+  INFILE 'c:\MyData\Records.dat';
+  INPUT Year  Event $ Record $ @@;
+RUN;
+PROC TABULATE DATA=skating;
+  CLASS Year Record;
+  TABLE Year='',Record*N='';
+  TITLE 'Men''s Speed Skating';
+  TITLE2 'Records Set at Olympics';
+RUN;
+ODS HTML CLOSE;
+
+/* Second Program */
+
+ODS HTML FILE='c:\MyHTML\table2.htm';
+PROC TABULATE DATA=skating
+     STYLE={JUST=center BACKGROUND=white};
+  CLASS Year Record;
+  TABLE Year='',Record*N='';
+  TITLE 'Men''s Speed Skating';
+  TITLE2 'Records Set at Olympics';
+RUN;
+ODS HTML CLOSE;
+
+
+/* Section 5.11 */
+
+/* First Program */
+
+ODS HTML FILE='c:\MyHTML\mens.html';
+DATA results;
+  INFILE
+     'c:\MyRawData\Mens5000.dat' DSD;
+  INPUT Place Name :$20.
+        Country :$15. Time ;
+RUN;
+PROC PRINT DATA=results;
+  ID Place;
+  TITLE 'Men''s 5000m Speed Skating';
+  TITLE2 '2002 Olympic Results';
+RUN;
+ODS HTML CLOSE;
+
+
+/* Second Program */	
+
+ODS HTML FILE='c:\MyHTML\mens2.html';
+PROC FORMAT;
+  VALUE rec 0 -< 378.72 ='red'
+            378.72 -< 382.20 = 'orange'
+            382.20 - HIGH = 'white';
+RUN;
+PROC PRINT DATA=results;
+  ID Place;
+  VAR Name Country;
+  VAR Time/STYLE={BACKGROUND=rec.};
+  TITLE 'Men''s 5000m Speed Skating';
+  TITLE2 '2002 Olympic Results';
+RUN;
+ODS HTML CLOSE;
+
+/* Chapter 6 */
+
+/* Section 6.1 */
+
+/* First Program */
+* Create permanent SAS data set trains; 
+DATA 'c:\MySASLib\trains';    
+   INFILE 'c:\MyRawData\Train.dat';    
+   INPUT Time TIME5. Cars People; 
+RUN;
+	
+/* Second Program */
+* Read the SAS data set trains with a SET statement;
+DATA averagetrain;
+   SET 'c:\MySASLib\trains';
+   PeoplePerCar = People / Cars;
+RUN;
+PROC PRINT DATA = averagetrain;
+   TITLE 'Average Number of People per Train Car';
+   FORMAT Time TIME5.;
+RUN;
+
+
+/* Section 6.2 */
+	
+/* Program */	
+DATA southentrance;
+   INFILE 'c:\MyRawData\South.dat';
+   INPUT Entrance $ PassNumber PartySize Age;
+PROC PRINT DATA = southentrance;
+   TITLE 'South Entrance Data';
+RUN;
+DATA northentrance;
+   INFILE 'c:\MyRawData\North.dat';
+   INPUT Entrance $ PassNumber PartySize Age Lot;
+PROC PRINT DATA = northentrance;
+   TITLE 'North Entrance Data';
+RUN; 
+
+* Create a data set, both, combining northentrance and southentrance;
+* Create a variable, AmountPaid, based on value of variable Age;
+DATA both;
+   SET southentrance northentrance;
+   IF Age = . THEN AmountPaid = .;
+      ELSE IF Age < 3  THEN AmountPaid = 0;
+      ELSE IF Age < 65 THEN AmountPaid = 35;
+      ELSE AmountPaid = 27;
+PROC PRINT DATA = both;
+   TITLE 'Both Entrances';
+RUN;
+
+
+/* Section 6.3 */
+/* Program */	
+DATA southentrance;
+   INFILE 'c:\MyRawData\South.dat';
+   INPUT Entrance $ PassNumber PartySize Age;
+PROC PRINT DATA = southentrance;
+   TITLE 'South Entrance Data';
+RUN;
+DATA northentrance;
+   INFILE 'c:\MyRawData\North.dat';
+   INPUT Entrance $ PassNumber PartySize Age Lot;
+PROC SORT DATA = northentrance;
+   BY PassNumber;
+PROC PRINT DATA = northentrance;
+   TITLE 'North Entrance Data';
+RUN;
+* Interleave observations by PassNumber;
+DATA interleave;
+   SET northentrance southentrance;
+   BY PassNumber;
+PROC PRINT DATA = interleave;
+   TITLE 'Both Entrances, By Pass Number';
+RUN;
+
+
+/* Section 6.4 */
+
+/* Program */
+
+DATA descriptions;     
+   INFILE 'c:\MyRawData\chocolate.dat' TRUNCOVER;    
+   INPUT CodeNum $ 1-4 Name $ 6-14 Description $ 15-60; 
+RUN;
+DATA sales;    
+   INFILE 'c:\MyRawData\chocsales.dat';    
+   INPUT CodeNum $ 1-4 PiecesSold 6-7; 
+PROC SORT DATA = sales;
+   BY CodeNum;
+RUN;
+* Merge data sets by CodeNum;
+DATA chocolates;    
+   MERGE sales descriptions;    
+   BY CodeNum;
+PROC PRINT DATA = chocolates;   
+   TITLE "Today's Chocolate Sales"; 
+RUN;
+
+/* Section 6.5 */
+
+/* Program */	
+DATA regular;
+   INFILE 'c:\MyRawData\Shoe.dat';
+   INPUT Style $ 1-15 ExerciseType $ RegularPrice;
+PROC SORT DATA = regular;
+   BY ExerciseType;
+RUN;
+DATA discount;
+   INFILE 'c:\MyRawData\Disc.dat';
+   INPUT ExerciseType $ Adjustment;
+RUN;
+* Perform many-to-one match merge;
+DATA prices;
+   MERGE regular discount;
+   BY ExerciseType;
+   NewPrice = ROUND(RegularPrice - (RegularPrice * Adjustment), .01);
+PROC PRINT DATA = prices;
+   TITLE 'Price List for May';
+RUN;
+
+
+/* Section 6.6 */
+
+/* Program */
+DATA shoes;
+   INFILE 'c:\MyRawData\Shoesales.dat';
+   INPUT Style $ 1-15 ExerciseType $ Sales;
+PROC SORT DATA = shoes;
+   BY ExerciseType;
+RUN;
+* Summarize sales by ExerciseType and print;
+PROC MEANS NOPRINT DATA = shoes;
+   VAR Sales;
+   BY ExerciseType;
+   OUTPUT OUT = summarydata SUM(Sales) = Total;
+PROC PRINT DATA = summarydata;
+   TITLE 'Summary Data Set';
+RUN;
+* Merge totals with the original data set;
+DATA shoesummary;
+   MERGE shoes summarydata;
+   BY ExerciseType;
+   Percent = Sales / Total * 100;
+PROC PRINT DATA = shoesummary;
+   BY ExerciseType;
+   ID ExerciseType;
+   VAR Style Sales Total Percent;
+   TITLE 'Sales Share by Type of Exercise';
+RUN;
+	
+
+/* Section 6.7 */
+/* Program */
+DATA shoes;
+   INFILE 'c:\MyRawData\Shoesales.dat';
+   INPUT Style $ 1-15 ExerciseType $ Sales;
+RUN;
+* Output grand total of sales to a data set and print;
+PROC MEANS NOPRINT DATA = shoes;
+   VAR Sales;
+   OUTPUT OUT = summarydata SUM(Sales) = GrandTotal;
+PROC PRINT DATA = summarydata;
+   TITLE 'Summary Data Set';
+RUN;
+* Combine the grand total with the original data;
+DATA shoesummary;
+   IF _N_ = 1 THEN SET summarydata;
+   SET shoes;
+   Percent = Sales / GrandTotal * 100;
+PROC PRINT DATA = shoesummary;
+   VAR Style ExerciseType Sales GrandTotal Percent;
+   TITLE 'Overall Sales Share';
+RUN;
+
+/* Section 6.8 */
+
+/* First Program */	
+LIBNAME perm 'c:\MySASLib';
+DATA perm.patientmaster;
+   INFILE 'c:\MyRawData\Admit.dat';
+   INPUT Account LastName $ 8-16 Address $ 17-34
+      BirthDate MMDDYY10. Sex $ InsCode $ 48-50 @52 LastUpdate MMDDYY10.;
+RUN;
+
+
+/* Second Program */
+LIBNAME perm 'c:\MySASLib';
+DATA transactions;
+   INFILE 'c:\MyRawData\NewAdmit.dat';
+   INPUT Account LastName $ 8-16 Address $ 17-34 BirthDate MMDDYY10. 
+      Sex $ InsCode $ 48-50 @52 LastUpdate MMDDYY10.;
+PROC SORT DATA = transactions;
+   BY Account;
+RUN;
+* Update patient data with transactions;
+DATA perm.patientmaster;
+   UPDATE perm.patientmaster transactions;
+   BY Account;
+PROC PRINT DATA = perm.patientmaster;
+   FORMAT BirthDate LastUpdate MMDDYY10.;
+   TITLE 'Admissions Data';
+RUN;
+
+
+/* Section 6.9 */
+
+/* Program */	
+DATA morning afternoon;
+   INFILE 'c:\MyRawData\Zoo.dat';
+   INPUT Animal $ 1-9 Class $ 11-18 Enclosure $ FeedTime $;
+   IF FeedTime = 'am' THEN OUTPUT morning;
+      ELSE IF FeedTime = 'pm' THEN OUTPUT afternoon;
+      ELSE IF FeedTime = 'both' THEN OUTPUT;
+RUN;
+PROC PRINT DATA = morning;
+   TITLE 'Animals with Morning Feedings';
+PROC PRINT DATA = afternoon;
+   TITLE 'Animals with Afternoon Feedings';
+RUN;
+
+	
+/* Section 6.10 */
+/* First Program */	
+* Create data for variables x and y;
+DATA generate;
+   DO x = 1 TO 6;
+      y = x ** 2;
+      OUTPUT;
+   END;
+PROC PRINT DATA = generate;
+   TITLE 'Generated Data';
+RUN;
+
+
+/* Second Program */
+* Create three observations for each data line read
+*   using three OUTPUT statements;
+DATA theaters;
+   INFILE 'c:\MyRawData\Movies.dat';
+   INPUT Month $ Location $ Tickets @;
+   OUTPUT;
+   INPUT Location $ Tickets @;
+   OUTPUT;
+   INPUT Location $ Tickets;
+   OUTPUT;
+RUN;
+PROC PRINT DATA = theaters;
+   TITLE 'Ticket Sales';
+RUN;
+	
+	
+/* Section 6.12 */
+
+/* Program */
+DATA customer;
+   INFILE 'c:\MyRawData\CustAddress.dat' TRUNCOVER;
+   INPUT CustomerNumber Name $ 5-21 Address $ 23-42;
+DATA orders;
+   INFILE 'c:\MyRawData\OrdersQ3.dat';
+   INPUT CustomerNumber Total;
+PROC SORT DATA = orders;
+   BY CustomerNumber;
+RUN;
+* Combine the data sets using the IN= option;
+DATA noorders;
+   MERGE customer orders (IN = Recent);
+   BY CustomerNumber;
+   IF Recent = 0;
+PROC PRINT DATA = noorders;
+   TITLE 'Customers with No Orders in the Third Quarter';
+RUN;
+
+
+	
+/* Section 6.13 */
+
+/* Program */
+*Input the data and create two subsets;
+DATA tallpeaks (WHERE = (Height > 6000))
+     american (WHERE = Continent CONTAINS (‘America’)));
+   INFILE 'c:\MyRawData\Mountains.dat';
+   INPUT Name $1-14 Continent $15-28 Height;
+RUN;
+PROC PRINT DATA = tallpeaks;
+   TITLE 'Members of the Seven Summits above 6,000 Meters';
+PROC PRINT DATA = american; 
+   TITLE 'Members of the Seven Summits in the Americas';
+RUN;	
+
+/* Section 6.14 */
+
+/* Program */
+DATA baseball;
+   INFILE 'c:\MyRawData\Transpos.dat';
+   INPUT Team $ Player Type $ Entry;
+PROC SORT DATA = baseball;
+   BY Team Player;
+PROC PRINT DATA = baseball;
+   TITLE 'Baseball Data After Sorting and Before Transposing';
+RUN;
+* Transpose data so salary and batavg are variables;
+PROC TRANSPOSE DATA = baseball OUT = flipped;
+   BY Team Player;
+   ID Type;
+   VAR Entry;
+PROC PRINT DATA = flipped;
+   TITLE 'Baseball Data After Transposing';
+RUN;
+
+
+
+/* Section 6.15 */
+
+/* Program */	
+
+DATA walkers;   
+   INFILE 'c:\MyRawData\Walk.dat';   
+   INPUT Entry AgeGroup $ Time @@; 
+PROC SORT DATA = walkers;    
+   BY Time; 
+* Create a new variable, Place; 
+DATA ordered;    
+   SET walkers;
+   Place = _N_;
+PROC PRINT DATA = ordered;
+  TITLE 'Results of Walk';
+
+PROC SORT DATA = ordered;
+   BY AgeGroup Time;
+* Keep the first observation in each age group;
+DATA winners;
+   SET ordered;
+   BY AgeGroup;
+   IF FIRST.AgeGroup = 1;
+PROC PRINT DATA = winners;
+   TITLE 'Winners in Each Age Group';
+RUN;
+
+
+/* Chapter 7 */
+
+/* Section 7.2 */
+
+/* Program */
+%LET flowertype = Ginger;
+
+* Read the data and subset with a macro variable;
+DATA flowersales;
+   INFILE 'c:\MyRawData\TropicalSales.dat';
+   INPUT CustomerID $4. @6 SaleDate MMDDYY10. @17 Variety $9. Quantity;
+   IF Variety = "&flowertype";
+RUN;
+* Print the report using a macro variable;
+PROC PRINT DATA = flowersales;
+   FORMAT SaleDate WORDDATE18.;
+   TITLE "Sales of &flowertype";
+RUN;
+
+/* Section 7.3 */
+/* Program */
+* Macro to print 5 largest sales;
+%MACRO sample;
+   PROC SORT DATA = flowersales;
+      BY DESCENDING Quantity;
+   RUN;
+   PROC PRINT DATA = flowersales (OBS = 5);
+      FORMAT SaleDate WORDDATE18.;
+      TITLE 'Five Largest Sales';
+   RUN;
+%MEND sample;
+
+* Read the flower sales data;
+DATA flowersales;
+   INFILE 'c:\MyRawData\TropicalSales.dat';
+   INPUT CustomerID $4. @6 SaleDate MMDDYY10. @17 Variety $9. Quantity;
+RUN;
+
+* Invoke the macro;
+%sample
+
+/* Section 7.4 */
+/* Program */
+* Macro with parameters;
+%MACRO select(customer=,sortvar=);
+   PROC SORT DATA = flowersales OUT = salesout;
+      BY &sortvar;
+      WHERE CustomerID = "&customer";
+   RUN;
+   PROC PRINT DATA = salesout;
+      FORMAT SaleDate WORDDATE18.;
+      TITLE1 "Orders for Customer Number &customer";
+      TITLE2 "Sorted by &sortvar";
+   RUN;
+%MEND select;
+
+
+* Read all the flower sales data;
+DATA flowersales;
+   INFILE 'c:\MyRawData\TropicalSales.dat';
+   INPUT CustomerID $4. @6 SaleDate MMDDYY10. @17 Variety $9. Quantity;
+RUN;
+
+*Invoke the macro;
+%select(customer = 356W, sortvar = Quantity)
+%select(customer = 240W, sortvar = Variety)
+
+
+/* Section 7.5 */
+/* Program */
+%MACRO dailyreports;
+   %IF &SYSDAY = Monday %THEN %DO;
+      PROC PRINT DATA = flowersales;
+         FORMAT SaleDate WORDDATE18.;
+         TITLE 'Monday Report: Current Flower Sales';
+      RUN;
+   %END;
+   %ELSE %IF &SYSDAY = Tuesday %THEN %DO;
+      PROC MEANS DATA = flowersales MEAN MIN MAX;
+         CLASS Variety;
+         VAR Quantity;
+         TITLE 'Tuesday Report: Summary of Flower Sales';
+      RUN;
+   %END;
+%MEND dailyreports;
+DATA flowersales;
+   INFILE 'c:\MyRawData\TropicalSales.dat';
+   INPUT CustomerID $4. @6 SaleDate MMDDYY10. @17 Variety $9. Quantity;
+RUN;
+%dailyreports
+
+/* Section 7.6 */
+/* Program */
+* Read the raw data;
+DATA flowersales;
+   INFILE 'c:\MySASLib\TropicalSales.dat';
+   INPUT CustomerID $4. @6 SaleDate MMDDYY10. @17 Variety $9. Quantity;
+PROC SORT DATA = flowersales;
+   BY DESCENDING Quantity;
+RUN;
+* Find biggest order and pass the customer id to a macro variable;
+DATA _NULL_;
+   SET flowersales;
+   IF _N_ = 1 THEN CALL SYMPUT("selectedcustomer",CustomerID);
+   ELSE STOP;
+RUN;
+PROC PRINT DATA = flowersales;
+   WHERE CustomerID = "&selectedcustomer";
+   FORMAT SaleDate WORDDATE18.;
+   TITLE "Customer &selectedcustomer Had the Single Largest Order";
+RUN;
+
+
+
+/* Chapter 8 */
+
+/* Section 8.2 */
+
+/* Program */
+DATA chocolate;
+   INFILE 'c:\MyRawData\Choc.dat';
+   INPUT AgeGroup $ FavoriteFlavor $ Uniqueness @@;
+RUN;
+
+* Bar charts for favorite flavor;
+PROC SGPLOT DATA = chocolate;
+   VBAR FavoriteFlavor / GROUP = AgeGroup;
+   LABEL FavoriteFlavor = 'Flavor of Chocolate';
+   TITLE 'Favorite Chocolate Flavors by Age Group';
+RUN;
+PROC SGPLOT DATA = chocolate;
+   VBAR FavoriteFlavor / RESPONSE = Uniqueness STAT = MEAN;
+   LABEL FavoriteFlavor = 'Flavor of Chocolate';
+   TITLE 'Uniqueness Ratings for Chocolate Flavors';
+RUN;
+
+
+/* Section 8.3 */
+
+/* Program */
+DATA bikerace;
+   INFILE 'c:\MyRawData\Criterium.dat';
+   INPUT Division $ NumberLaps @@;
+RUN;
+* Create histogram;
+PROC SGPLOT DATA = bikerace;
+   HISTOGRAM NumberLaps / SHOWBINS;
+   DENSITY NumberLaps;
+   DENSITY NumberLaps / TYPE = KERNEL;
+   TITLE 'Bicycle Criterium Results';
+RUN;
+* Create box plot;
+PROC SGPLOT DATA = bikerace;
+   VBOX NumberLaps / CATEGORY = Division;
+   TITLE 'Bicycle Criterium Results';
+RUN;
+
+
+
+/* Section 8.4 */
+
+/* Program */
+DATA onionrings;
+   INFILE 'c:\MyRawData\Onions.dat';
+   INPUT VisTeam $ 1-20 CSales BSales OurHits VisHits OurRuns VisRuns;
+   Action = OurHits + VisHits + OurRuns + VisRuns;
+RUN;
+
+* Plot Bleacher Sales by Action;
+PROC SGPLOT DATA = onionrings;
+   SCATTER X = Action Y = BSales;
+   SCATTER X = Action Y = CSales;
+   XAXIS LABEL = 'Hits + Runs' VALUES = (0 TO 40 BY 10);
+   YAXIS LABEL = 'Number Sold';
+   LABEL BSales = 'Sales in Bleachers'
+         CSales = 'Sales at Stands';
+   TITLE 'Onion Ring Sales vs. Game Action';
+RUN;
+
+/* Section 8.5 */
+
+/* Program */
+DATA temperatures;
+   INFILE 'c:\MyRawData\Temps.dat';
+   INPUT Month IntFalls Raleigh Yuma @@;
+RUN;
+
+* Plot average high and low temperatures by city;
+PROC SGPLOT DATA = temperatures;
+   SERIES X = Month Y = IntFalls;
+   SERIES X = Month Y = Raleigh;
+   SERIES X = Month Y = Yuma;
+   REFLINE 32 75 / TRANSPARENCY = 0.5 LABEL = ('32 degrees' '75 degrees');
+   XAXIS TYPE = DISCRETE;
+   YAXIS LABEL = 'Average High Temperature (F)';
+   TITLE 'Temperatures by Month for International Falls, '
+      'Raleigh, and Yuma';
+RUN;
+
+
+
+/* Section 8.6 */
+
+/* Program */	
+DATA Olympic1500;
+  INFILE 'C:\MyRawData\Olympic1500.dat';
+  INPUT Year Men @@;
+RUN;
+PROC SGPLOT DATA=Olympic1500;
+  REG X=Year Y=Men;
+  LOESS X=Year Y=Men / NOMARKERS;
+  YAXIS LABEL='Time in Seconds';
+  TITLE "Olympic Times for Men's 1500 Meter Run";
+RUN;
+PROC SGPLOT DATA=Olympic1500;
+  PBSPLINE X=Year Y=Men/CLM NOLEGCLM;
+  YAXIS LABEL='Time in Seconds';
+  TITLE "Olympic Times for Men's 1500 Meter Run";
+RUN;
+
+
+/* Section 8.7 */
+
+/* Program */
+DATA class;
+   INFILE 'c:\MyRawData\Scores.dat';
+   INPUT Score @@;
+RUN;
+PROC UNIVARIATE DATA = class;
+   VAR Score;
+   TITLE;
+RUN;
+
+
+/* Section 8.8 */
+/* Program */
+ODS GRAPHICS ON;
+PROC UNIVARIATE DATA = class;
+   VAR Score;
+   HISTOGRAM Score/NORMAL;
+   PROBPLOT Score;
+   TITLE;
+RUN;
+
+
+
+/* Section 8.9 */
+
+/* Program */
+DATA booklengths;    
+   INFILE 'c:\MyRawData\Picbooks.dat';
+   INPUT NumberOfPages @@;
+RUN;
+*Produce summary statistics;
+PROC MEANS DATA=booklengths N MEAN MEDIAN CLM ALPHA=.10;
+   TITLE 'Summary of Picture Book Lengths';
+RUN;
+
+
+/* Section 8.10 */
+
+/* Program */
+DATA bus;
+   INFILE 'c:\MyRawData\Bus.dat';
+   INPUT BusType $  OnTimeOrLate $ @@;
+RUN;
+PROC FREQ DATA = bus;
+   TABLES BusType * OnTimeOrLate / CHISQ;
+   TITLE;
+RUN;
+
+
+/* Section 8.11 */
+/* Program */
+ODS GRAPHICS ON;
+PROC FREQ DATA = bus;
+   TABLES BusType * OnTimeOrLate;
+   TABLES BusType * OnTimeOrLate / PLOTS=FREQPLOT(TWOWAY=GROUPHORIZONTAL);
+   TITLE;
+RUN;
+ 
+
+
+/* Section 8.12 */
+
+/* Program */	
+DATA class;
+   INFILE 'c:\MyRawData\Exercise.dat';
+   INPUT Score Television Exercise @@;
+RUN;
+PROC CORR DATA = class;
+   VAR Television Exercise;
+   WITH Score;
+   TITLE 'Correlations for Test Scores';
+   TITLE2 'With Hours of Television and Exercise';
+RUN;
+
+
+/* Section 8.13 */
+/* Program */
+ODS GRAPHICS ON;
+PROC CORR DATA = class PLOTS = (SCATTER MATRIX);
+   VAR Television Exercise;
+   WITH Score;
+   TITLE 'Correlations for Test Scores';
+   TITLE2 'With Hours of Television and Exercise';
+RUN;
+ 
+/* Section 8.14 */
+
+/* Program */
+DATA hits;
+   INFILE 'c:\MyRawData\Baseball.dat';
+   INPUT Height Distance @@;
+RUN;
+* Perform regression analysis;
+PROC REG DATA = hits;
+   MODEL Distance = Height;
+   TITLE 'Results of Regression Analysis';
+RUN;
+
+
+
+/* Section 8.15 */
+/* Program */
+ODS GRAPHICS ON;
+PROC REG DATA = hits PLOTS(ONLY) = (DIAGNOSTICS FITPLOT);
+   MODEL Distance = Height;
+   TITLE 'Results of Regression Analysis';
+RUN;
+
+/* Section 8.16 */
+
+/* Program */
+DATA basket;
+   INFILE 'c:\MyRawData\Basketball.dat';
+   INPUT Team $ Height @@;
+RUN;
+* Use ANOVA to run one-way analysis of variance;
+ODS GRAPHICS ON;
+PROC ANOVA DATA = basket;
+   CLASS Team;
+   MODEL Height = Team;
+   MEANS Team / SCHEFFE;
+   TITLE "Girls' Heights on Basketball Teams";
+RUN;
+
+
+/* Section 8.17 */
+/* Program */
+PROC ANOVA DATA = basket;
+   CLASS Team;
+   MODEL Height = Team;
+   MEANS Team / SCHEFFE;
+   TITLE "Girls’ Heights on Basketball Teams";
+RUN;
+
+
+/* Chapter 9 */
+
+/* Section 9.3 */
+
+/* First Program */
+
+LIBNAME travel 'c:\MySASLib';
+DATA travel.golf;
+   INFILE 'c:\MyRawData\Golf.dat';
+   INPUT CourseName $18. NumberOfHoles Par Yardage GreenFees;
+RUN;
+
+/* Second Program */
+
+LIBNAME travel 'c:\MySASLib';
+* Create Tab-delimited file;
+PROC EXPORT DATA = travel.golf OUTFILE = 'c:\MyRawData\Golf.txt' REPLACE;
+RUN;
+
+/* Section 9.4 */
+/* First Program */
+LIBNAME travel 'c:\MySASLib';
+DATA travel.golf;
+   INFILE 'c:\MyRawData\Golf.dat';
+   INPUT CourseName $18. NumberOfHoles Par Yardage GreenFees;
+RUN;
+
+
+/* Second Program */
+LIBNAME travel 'c:\MySASLib';
+* Create Microsoft Excel file';
+PROC EXPORT DATA=travel.golf OUTFILE = 'c:\MyExcel\Golf.xls' REPLACE;
+RUN;
+
+/* Section 9.5 */
+/* First Program */
+LIBNAME travel 'c:\MySASLib';
+DATA travel.golf;
+   INFILE 'c:\MyRawData\Golf.dat';
+   INPUT CourseName $18. NumberOfHoles Par Yardage GreenFees;
+RUN;
+
+/* Second Program */
+LIBNAME travel 'c:\MySASLib';
+DATA _NULL_;
+   SET travel.golf;
+   FILE 'c:\MyRawData\Newfile.dat';
+   PUT CourseName 'Golf Course' @32 GreenFees DOLLAR7.2 @40 'Par ' Par;
+RUN;
+
+/* Section 9.6 */
+/* First Program */
+LIBNAME travel 'c:\MySASLib';
+ODS CSV FILE='c:\MyCSVFiles\golfinfo.csv'; 
+PROC PRINT DATA = travel.golf;
+   TITLE 'Golf Course Information';
+RUN;
+OSD CSV CLOSE;
+
+
+
+/* Second Program */
+LIBNAME travel 'c:\MySASLib';
+ODS HTML FILE='c:\MyHTMLFiles\golfinfo.html'; 
+PROC PRINT DATA = travel.golf NOOBS;
+   TITLE 'Golf Course Information';
+RUN;
+ODS HTML CLOSE;
+
+/* Section 9.7 */
+/* Program */
+
+
+LIBNAME sports 'c:\MySASLib';
+DATA sports.golflinux(OUTREP=LINUX_32);
+  SET sports.golf;
+RUN;
+
+/* Appendix B */
+
+/* SPSS Program (page 315) */
+
+DATA LIST FILE =                
+  'c:\MyRawData\Survey.dat'	        
+  /Name 1-8 (A) Age 9-10 	          
+  Sex 12 Song1 TO Song5 13-22.	       
+VARIABLE LABELS	                    
+  Song1 'Black Water'	                
+  Song2 'Bennie and the Jets'	        
+  Song3 'Stayin Alive'	               
+  Song4 'Yellow Submarine'	           
+  Song5 'Only Time'.	            
+VALUE LABELS	                       
+  sex 1 'female' 2 'male'.	                   
+TITLE 'Music Market Survey'.    
+LIST.	                           
+FREQUENCIES	                     
+  VARIABLES = Song1.	               
+CROSSTABS	                          
+  /TABLES = Sex BY Song1.      	 
+SAVE OUTFILE =	
+  'c:\MySPSSDir\survey.sav'.
+
+
+/* SAS Program (page 315) */
+
+DATA 'c:\MySASLib\survey';
+   INFILE 'c:\MyRawData\Survey.dat';
+   INPUT Name $ 1-8 Age
+      Sex Song1-Song5;
+   LABEL Song1 = 'Black Water' 
+      Song2 = 'Bennie and the Jets'
+      Song3 = 'Stayin Alive'
+      Song4 = 'Yellow Submarine'
+      Song5 = 'Only Time';
+PROC FORMAT;
+   VALUE sex 1 = 'female'
+          2 = 'male';
+TITLE 'Music Market Survey';
+PROC PRINT;
+PROC FREQ;
+   TABLE Song1 Sex * Song1;
+   FORMAT Sex Sex.;
+RUN;
+
+/* Program (page 318) */
+
+LIBNAME myspss SPSS 'c:\MySPSSDir\survey.por';
+* Print the SPSS portable file;
+PROC PRINT DATA = myspss.getsurv;
+   TITLE 'Music Market Survey';
+RUN;
+* List the contents of the SPSS portable file;
+PROC CONTENTS DATA = myspss.getsurv;
+RUN;
+* Convert SPSS portable file to SAS data set;
+DATA 'c:\MySASLib\sassurvey';
+   SET myspss.getsurv;
+RUN;
+
+/* Program (page 320) */
+
+* Import an SPSS save file as a permanent SAS data set;
+LIBNAME radio 'c:\MySASLib'; 
+PROC IMPORT DATAFILE = 	
+            'c:\MySPSSDir\survey.sav'			            
+            OUT = radio.sassurvey 
+            DBMS = SAV 
+            REPLACE;
+RUN;
+* Print the new SAS data set;
+PROC PRINT DATA = radio.sassurvey;
+   TITLE 'Music Market Survey';
+RUN;
+
+
+/* First Program (page 321) */
+
+* Import an SPSS SAV file as a temporary SAS data set;
+PROC IMPORT DATAFILE = 
+ 	    'c:\MySPSSDir\survey.sav'
+	    OUT = sassurvey 
+            DBMS = SAV 
+            REPLACE;
+RUN;
+
+/* Second Program (page 321) */
+
+OPTIONS NOFMTERR;
+LIBNAME radio 'c:\MySASLib'; 
+* Print the SAS data set;
+PROC PRINT DATA = radio.sassurvey;
+   TITLE 'Music Market Survey';
+RUN;
+
+
+/* Appendix F */
+
+/* Program (page 327) */
+
+LIBNAME sports 'c:\MySASLib';
+PROC SQL;
+   CREATE TABLE sports.customer
+      (CustomerNumber num,
+       Name           char(17),
+       Address        char(20));
+
+   INSERT INTO sports.customer
+      VALUES (101, 'Murphy''s Sports ', '115 Main St.        ')
+      VALUES (102, 'Sun N Ski        ', '2106 Newberry Ave.  ')
+      VALUES (103, 'Sports Outfitters', '19 Cary Way         ')
+      VALUES (104, 'Cramer & Johnson ', '4106 Arlington Blvd.')
+      VALUES (105, 'Sports Savers    ', '2708 Broadway      ');
+
+   TITLE 'The Sports Customer Data';
+   SELECT *
+      FROM sports.customer;
+
+/* Program (page 328) */
+
+LIBNAME sports 'c:\MySASLib';
+DATA sports.customer;
+   INPUT CustomerNumber Name $ 5-21 Address $ 23-42;
+   DATALINES;
+101 Murphy's Sports   115 Main St.
+102 Sun N Ski         2106 Newberry Ave.
+103 Sports Outfitters 19 Cary Way
+104 Cramer & Johnson  4106 Arlington Blvd.
+105 Sports Savers     2708 Broadway
+   ;
+PROC PRINT DATA = sports.customer;
+TITLE 'The Sports Customer Data';
+RUN;
+/* First Program (page 329) */
+
+LIBNAME sports 'c:\MySASLib';
+PROC SQL;
+   TITLE 'Customer Number 102';
+   SELECT *
+      FROM sports.customer
+      WHERE CustomerNumber = 102;
+
+/* Second Program (page 329) */
+
+LIBNAME sports 'c:\MySASLib';
+DATA sunnski;
+   SET sports.customer;
+   IF CustomerNumber = 102;
+PROC PRINT DATA = sunnski;
+   TITLE 'Customer Number 102';
+RUN;
+/* Program (page 331) */
+
+LIBNAME sports 'c:\MySASLib';
+DATA outfitters;
+   SET sports.customer;
+   IF Name = 'Sports Outfitters';
+PROC PRINT DATA = outfitters;
+RUN;
+/* First Program (page 332) */
+
+LIBNAME sports 'c:\MySASLib';
+DATA outfitters;
+   SET sports.customer;
+   WHERE Name = 'Sports Outfitters';
+PROC PRINT DATA = outfitters;
+RUN;
+/* Second Program (page 332) */
+
+LIBNAME sports 'c:\MySASLib';
+DATA outfitters (WHERE = (Name = 'Sports Outfitters'));
+   SET sports.customer;
+PROC PRINT DATA = outfitters;
+RUN;
+/* Third Program (page 332) */
+
+LIBNAME sports 'c:\MySASLib';
+PROC PRINT DATA = sports.customer;
+   WHERE Name = 'Sports Outfitters';
+RUN;
+/* Program (page 333) */
+
+LIBNAME sports 'c:\MySASLib';
+PROC PRINT DATA = sports.customer (WHERE = (Name = 'Sports Outfitters'));
+RUN;
+
+
+

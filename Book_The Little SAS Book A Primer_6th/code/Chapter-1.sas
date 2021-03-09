@@ -1,6 +1,10 @@
 /*
 * Chapter 1;
 */
+DATA animals;
+	INFILE 'c:\MyRawData\Zoo.dat';
+	INPUT Lions Tigers;
+RUN;
 
 
 * Compute the body mass index using pounds and inches;

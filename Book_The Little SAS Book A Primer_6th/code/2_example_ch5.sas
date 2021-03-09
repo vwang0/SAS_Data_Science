@@ -1,10 +1,9 @@
-/* Chapter 5 */
 
 /* Section 5.2 */
 
 /* First Program */	
  DATA giant; 
-    INFILE '/home/u49596266/little_sas_book/Tomatoes.dat' DSD; 
+    INFILE '/home/u49657251/little_sas_book/Tomatoes.dat' DSD; 
     INPUT Name :$15. Color $ Days Weight; 
 /*  */
 /* * Trace PROC MEANS; */
@@ -26,7 +25,7 @@ RUN;
 /* Program */
 
 DATA giant;
-   INFILE '/home/u49596266/little_sas_book/Tomatoes.dat' DSD;
+   INFILE '/home/u49657251/little_sas_book/Tomatoes.dat' DSD;
    INPUT Name :$15. Color $ Days Weight;
 PROC TABULATE DATA = giant;
    CLASS Color;
@@ -43,10 +42,10 @@ RUN;
 
 /* Program */
 * Create the HTML files and remove procedure name;
-ODS HTML FILE = '/home/u49596266/little_sas_book/Marine.html'; 
+ODS HTML FILE = '/home/u49657251/little_sas_book/Marine.html'; 
 ODS NOPROCTITLE;
 DATA marine;
-   INFILE '/home/u49596266/little_sas_book/SeaLife.dat';
+   INFILE '/home/u49657251/little_sas_book/SeaLife.dat';
    INPUT Name $ Family $ Length @@;
 RUN;
 PROC MEANS DATA = marine MEAN MIN MAX;
@@ -63,10 +62,10 @@ ODS HTML CLOSE;
 /* Program */
 
 * Create an RTF file;
-ODS RTF FILE = '/home/u49596266/little_sas_book/Marine.rtf' BODYTITLE COLUMNS=2;
+ODS RTF FILE = '/home/u49657251/little_sas_book/Marine.rtf' BODYTITLE COLUMNS=2;
 ODS NOPROCTITLE;
 DATA marine;
-   INFILE '/home/u49596266/little_sas_book/SeaLife.dat';
+   INFILE '/home/u49657251/little_sas_book/SeaLife.dat';
    INPUT Name $ Family $ Length @@;
 RUN;
 PROC MEANS DATA = marine MEAN MIN MAX;
@@ -85,7 +84,7 @@ ODS RTF CLOSE;
 ODS PDF FILE = 'c:\MyPDFFiles\Marine.pdf' STARTPAGE = NO;
 ODS NOPROCTITLE;
 DATA marine;
-   INFILE '/home/u49596266/little_sas_book/SeaLife.dat';
+   INFILE '/home/u49657251/little_sas_book/SeaLife.dat';
    INPUT Name $ Family $ Length @@;
 RUN;
 PROC MEANS DATA = marine MEAN MIN MAX;
@@ -104,9 +103,9 @@ ODS PDF CLOSE;
 
 /* First Program */
 
-ODS HTML FILE='/home/u49596266/little_sas_book/results.htm';
+ODS HTML FILE='/home/u49657251/little_sas_book/results.htm';
 DATA skating;
-  INFILE '/home/u49596266/little_sas_book/Women.csv' DSD MISSOVER;
+  INFILE '/home/u49657251/little_sas_book/Women.csv' DSD MISSOVER;
   INPUT Year Name :$20. Country $ 
         Time $ Record $;
 RUN;
@@ -129,7 +128,7 @@ ODS HTML CLOSE;
 
 /* Third Program */
 
-ODS HTML FILE='/home/u49596266/little_sas_book/results3.htm';
+ODS HTML FILE='/home/u49657251/little_sas_book/results3.htm';
 PROC PRINT DATA=skating 
      STYLE(DATA)={BACKGROUND=white};
   TITLE 'Women''s 5000 Meter Speed Skating';

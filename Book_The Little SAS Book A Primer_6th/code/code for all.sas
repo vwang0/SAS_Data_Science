@@ -401,7 +401,7 @@ DATA sportscars;
    END;
 RUN;
 PROC PRINT DATA = sportscars;
-   TITLE "Eddy’s Excellent Emporium of Used Sports Cars";
+   TITLE "Eddyï¿½s Excellent Emporium of Used Sports Cars";
 RUN;
 
 /* Section 3.6 */
@@ -1466,7 +1466,7 @@ RUN;
 /* Program */
 *Input the data and create two subsets;
 DATA tallpeaks (WHERE = (Height > 6000))
-     american (WHERE = Continent CONTAINS (‘America’)));
+     american (WHERE = Continent CONTAINS (ï¿½Americaï¿½)));
    INFILE 'c:\MyRawData\Mountains.dat';
    INPUT Name $1-14 Continent $15-28 Height;
 RUN;
@@ -1880,7 +1880,7 @@ PROC ANOVA DATA = basket;
    CLASS Team;
    MODEL Height = Team;
    MEANS Team / SCHEFFE;
-   TITLE "Girls’ Heights on Basketball Teams";
+   TITLE "Girlsï¿½ Heights on Basketball Teams";
 RUN;
 
 

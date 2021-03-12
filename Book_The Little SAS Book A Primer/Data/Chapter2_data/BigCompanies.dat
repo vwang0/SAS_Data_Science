@@ -1,0 +1,100 @@
+1    ICBC                         China             $175.9B   $45.2B $4,034.5B   $305.1B
+2    JPMorgan Chase               United States     $132.9B   $32.7B $2,737.2B   $368.5B
+3    China Construction Bank      China             $150.3B   $38.8B $3,382.4B     $225B
+4    Agricultural Bank of China   China             $137.5B   $30.9B $3,293.1B     $197B
+5    Bank of America              United States     $111.9B   $28.5B $2,377.2B   $287.3B
+6    Apple                        United States     $261.7B   $59.4B   $373.7B   $961.3B
+7    Ping An Insurance Group      China             $151.8B   $16.3B $1,038.3B   $220.2B
+8    Bank of China                China             $126.7B   $27.5B $3,097.6B     $143B
+9    Royal Dutch Shell            Netherlands       $382.6B   $23.3B   $399.2B   $264.9B
+10   Wells Fargo                  United States     $101.5B   $23.1B $1,887.8B   $214.7B
+11   ExxonMobil                   United States     $279.2B   $20.8B   $346.2B   $343.4B
+12   AT&T                         United States     $170.8B   $19.4B   $531.9B   $233.3B
+13   Samsung Electronics          South Korea       $221.5B   $39.9B   $304.1B   $272.4B
+14   Citigroup                    United States       $100B   $17.9B $1,958.4B   $161.1B
+15   Toyota Motor                 Japan             $272.1B   $17.2B   $465.6B   $176.6B
+16   Microsoft                    United States     $118.2B   $33.5B   $258.9B   $946.5B
+17   Alphabet                     United States       $137B   $30.7B   $232.8B   $863.2B
+18   Volkswagen Group             Germany           $278.2B     $14B   $553.5B      $92B
+19   Chevron                      United States     $158.7B   $14.8B   $253.9B   $228.3B
+20   Verizon Communications       United States     $130.9B   $15.5B   $264.8B   $239.7B
+21   HSBC Holdings                United Kingdom     $64.3B   $13.7B $2,558.1B   $175.5B
+22   PetroChina                   China             $322.8B      $8B   $354.3B   $198.7B
+23   Allianz                      Germany           $118.8B    $8.8B $1,060.2B   $102.3B
+24   BP                           United Kingdom    $299.1B    $9.3B   $282.2B   $149.5B
+25   Total                        France            $184.2B   $11.4B   $256.8B   $149.5B
+26   Berkshire Hathaway           United States     $247.8B      $4B   $707.8B   $516.4B
+27   China Mobile                 Hong Kong         $111.8B   $17.9B   $223.7B   $197.6B
+28   Amazon                       United States     $232.9B   $10.1B   $162.6B   $916.1B
+29   Walmart                      United States     $514.4B    $6.7B   $219.3B   $296.1B
+30   Santander                    Spain              $89.5B    $9.2B $1,668.2B    $84.1B
+31   China Merchants Bank         China              $54.9B   $12.3B   $982.5B   $130.4B
+32   UnitedHealth Group           United States     $231.4B   $12.6B   $161.2B   $212.8B
+33   Comcast                      United States      $94.5B   $11.7B   $251.7B     $192B
+34   BNP Paribas                  France            $101.6B    $8.4B   $2,333B    $68.7B
+35   Sinopec                      China             $399.7B    $9.5B     $233B   $105.6B
+36   Softbank                     Japan              $86.2B   $13.9B   $332.3B   $112.4B
+37   Daimler                      Germany           $197.4B    $8.6B   $321.9B    $71.3B
+37   Johnson & Johnson            United States      $81.6B   $14.7B     $153B   $366.2B
+39   Bank of Communications       China              $64.8B   $11.2B $1,388.2B    $63.6B
+40   Gazprom                      Russia            $128.4B   $18.9B   $305.9B    $59.9B
+41   RBC                          Canada             $46.3B    $9.6B $1,040.3B   $114.9B
+42   Nestlé                       Switzerland        $93.4B   $10.4B     $139B   $281.3B
+43   Mitsubishi UFJ Financial     Japan              $53.7B      $9B $2,799.9B      $65B
+44   Intel                        United States      $70.8B   $21.1B     $128B   $263.1B
+45   Goldman Sachs Group          United States        $51B    $9.9B     $925B    $75.5B
+46   TD Bank Group                Canada             $42.5B    $8.7B   $1,007B   $103.8B
+47   Sberbank                     Russia             $51.6B   $13.3B   $449.7B    $78.5B
+48   Morgan Stanley               United States      $50.9B    $8.5B     $876B    $80.2B
+49   Boeing                       United States     $101.1B   $10.5B   $117.4B   $214.5B
+50   Petrobras                    Brazil             $95.7B    $7.1B     $222B    $91.2B
+51   Nippon Telegraph & Tel       Japan             $107.5B    $8.7B   $199.6B    $80.2B
+52   Rosneft                      Russia            $112.9B    $8.7B   $191.3B    $72.2B
+53   Procter & Gamble             United States      $66.9B   $10.8B   $123.7B   $265.3B
+54   Pfizer                       United States      $53.6B   $11.2B   $159.4B   $218.6B
+55   Industrial Bank              China              $49.7B    $9.3B     $951B    $62.4B
+56   General Motors               United States       $147B    $8.1B   $227.3B    $56.8B
+57   BMW Group                    Germany             $115B    $8.4B   $238.9B    $57.5B
+58   Itaú Unibanco Holding        Brazil             $53.8B    $6.8B   $383.2B    $80.8B
+59   Alibaba                      China              $51.9B   $10.3B   $133.7B   $480.8B
+60   IBM                          United States      $78.7B    $8.6B   $130.9B   $124.9B
+60   Novartis                     Switzerland        $51.9B   $12.6B   $145.6B   $175.6B
+60   Postal Savings Bank Of China China                $61B      $8B $1,386.1B    $48.8B
+63   Facebook                     United States      $55.8B   $22.1B    $97.3B     $512B
+64   Siemens                      Germany            $98.3B    $5.5B   $164.2B      $97B
+65   Shanghai Pudong Development  China                $50B    $8.5B   $916.1B    $52.1B
+66   Japan Post Holdings          Japan             $115.6B    $4.3B $2,619.7B    $44.5B
+67   Sumitomo Mitsui Financial    Japan              $52.5B    $6.6B $1,841.1B    $50.9B
+68   Banco Bradesco               Brazil             $62.6B    $5.2B   $332.1B    $70.7B
+69   Anheuser-Busch InBev         Belgium            $54.6B    $4.3B   $233.8B   $175.7B
+70   Walt Disney                  United States      $59.4B     $11B    $99.9B   $238.1B
+71   Reliance Industries          India              $79.7B    $5.6B   $124.6B   $126.4B
+72   CITIC                        Hong Kong            $68B    $6.4B   $978.5B    $43.6B
+73   Sony                         Japan              $76.9B    $7.3B   $190.7B    $60.1B
+74   Cisco Systems                United States      $50.8B   $12.9B   $102.5B   $248.3B
+74   Tencent Holdings             China              $47.2B   $11.9B   $105.4B   $472.1B
+76   Honda Motor                  Japan             $142.6B    $6.6B   $180.9B    $50.5B
+77   Enel                         Italy              $86.3B    $5.7B   $189.1B    $63.1B
+78   United Technologies          United States      $66.5B    $5.3B   $134.2B   $118.1B
+79   Commonwealth Bank            Australia          $31.4B    $6.7B   $690.2B    $92.8B
+80   China St. Construction Eng.  China             $178.8B    $5.8B   $271.4B      $41B
+81   DowDuPont                    United States        $86B    $3.8B     $188B    $87.6B
+82   Equinor                      Norway             $77.9B    $7.6B   $112.5B    $77.6B
+83   American Express             United States      $43.3B    $6.9B   $188.6B    $95.3B
+84   MetLife                      United States      $66.9B    $5.1B   $692.5B    $43.4B
+85   AXA Group                    France            $139.7B    $2.2B $1,034.5B    $63.6B
+86   PepsiCo                      United States        $65B   $12.6B    $75.5B   $178.2B
+87   Bank of Nova Scotia          Canada             $32.4B    $6.4B   $787.5B    $67.1B
+88   Roche Holding                Switzerland        $58.1B   $10.7B    $79.6B     $222B
+89   ING Group                    Netherlands        $39.4B    $5.5B   $1,014B    $52.7B
+90   Lloyds Banking Group         United Kingdom     $35.2B    $5.3B $1,015.8B    $60.9B
+91   Eni                          Italy              $89.4B      $5B   $139.5B    $62.5B
+92   Oracle                       United States      $39.6B   $10.8B   $109.4B   $186.3B
+93   China Citic Bank             China              $45.6B    $6.8B   $883.6B    $42.9B
+94   China Evergrande Group       China              $71.7B    $5.8B   $273.8B    $42.5B
+95   UBS                          Switzerland        $42.9B    $4.8B   $958.5B      $49B
+96   AIRBUS                       Netherlands        $75.2B    $3.6B   $131.7B   $104.9B
+97   LukOil                       Russia            $127.9B    $9.9B    $82.6B    $61.1B
+98   Prudential Financial         United States      $61.3B      $4B   $815.1B    $42.4B
+99   BASF                         Germany            $76.2B    $5.6B   $103.8B    $76.6B
+100  SAIC Motor                   China             $135.2B    $5.4B     $114B    $51.5B
